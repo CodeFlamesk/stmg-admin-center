@@ -5,9 +5,7 @@ export default function Home() {
   return (
     <main >
     <div> 
-      <Link href="/signin">
-      Sign In
-      </Link>
+     
     </div>
     </main>
   )

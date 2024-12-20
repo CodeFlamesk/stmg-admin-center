@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+
 import Image from "next/image";
 
 export default async function Signin() {
@@ -8,7 +9,7 @@ export default async function Signin() {
                 <p className="text-3xl font-bold text-center">
                     Sign in to your account
                 </p>
-                <form  className="flex max-w-[358px] w-full flex-col pt-[70px]">
+             {/*    <form  className="flex max-w-[358px] w-full flex-col pt-[70px]">
                     <label htmlFor="Email" className="auth-text">Email</label>
                     <input type="email" id="Email" className="auth-input  input-shadow inputs focus:outline-none    focus:ring-0" placeholder="Email" required/>
                     <label htmlFor="password" className="auth-text pt-6">Password</label>
@@ -17,7 +18,8 @@ export default async function Signin() {
                         Sign In
                     </button>
 
-                </form>
+                </form> */}
+          
             </div>
             <div className="object-cover mx-auto w-full max-w-[358px]  xl:max-w-[44%] mt-[70px] " >
                 <Image
