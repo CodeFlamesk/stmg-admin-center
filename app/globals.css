@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,20 +10,62 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body {
+  font-family: 'Poppins', sans-serif !important;
+  background-color: white;
+  color: black;
+  font-size: 14px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+
+@layer base {
+
+}
+
+@layer utilities {
+
+  .auth-text {
+     @apply  font-medium text-base text-dark;
+  }
+  .auth-input{
+    @apply w-full border border-grey font-normal text-base text-darkl rounded-lg mt-[6px] px-[14px] py-[11px] ; 
+  }
+  .inputs:focus {
+    @apply border-purple;
+  }
+
+  .input-shadow {
+    box-shadow: inset 0px 0px 0px 50px #F5F5F7;
+  }
+
+  .inputs:valid:not(:placeholder-shown) {
+    @apply border-green;
+  }
+
+
+  .inputs:invalid:not(:placeholder-shown):not(:focus) {
+    @apply border-red;
+  }
+
+  .inputs-checkout:placeholder-shown {
+    @apply border-gray ;
+  }
+
+  .inputs-checkout:focus {
+    @apply border-purple ;
+  }
+
+  .inputs-checkout:valid:not(:placeholder-shown) {
+    @apply border-green;
+  }
+
+  .inputs-checkout:invalid:not(:placeholder-shown):not(:focus) {
+    @apply border-red;
+  }
+.input-style{
+@apply  w-full h-[42px] px-[14px]  rounded  bg-gray border border-gray focus:outline-none text-sm font-normal  text-icon-gray  ;
+}
+.input-style:focus {
+  @apply border-purple;
+}
 }
