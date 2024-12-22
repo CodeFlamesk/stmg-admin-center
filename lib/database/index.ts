@@ -1,19 +1,20 @@
 import mongoose from 'mongoose';
-import { buffer } from 'stream/consumers';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-let cached = (global as any).mongoose || {conn: null, promise: null };
-export const connectToDatabse = async () => {
-if (cached.conn) return cached.conn;
+let cached = (global as any).mongoose || { conn: null, promise: null };
 
-if(!MONGODB_URI) throw new Error('MONGODB_URI is missing');
+export const connectToDatabase = async () => {
+  if (cached.conn) return cached.conn;
 
-cached.promise=cached.promise || mongoose.connect(MONGODB_URI, {
-    dbName: 'stmg',
+  if(!MONGODB_URI) throw new Error('MONGODB_URI is missing');
+
+  cached.promise = cached.promise || mongoose.connect(MONGODB_URI, {
+    dbName: 'evently',
     bufferCommands: false,
-})
+  })
 
-cached.conn = await cached.promise;
-return cached.conn;
+  cached.conn = await cached.promise;
+
+  return cached.conn;
 }
