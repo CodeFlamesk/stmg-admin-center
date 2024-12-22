@@ -16,7 +16,7 @@ const Header: React.FC = () => {
                     </nav>
              <div>
             
-                <div className=" font-medium text-dark items-center flex " >
+                <div className=" font-medium text-dark items-center flex" >
                 <SignedOut>
   <div className="flex gap-x-4">
    <p className="hover:text-purple duration-300 transition-all ease-in-out"><SignInButton mode="modal" /></p> 
