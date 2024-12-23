@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
     const newUser = await createUser(user);
 
-    if (newUser) {
+    if (newUser && id) { // Перевірка на існування id перед викликом updateUserMetadata
       const client = await clerkClient();
       await client.users.updateUserMetadata(id, {
         publicMetadata: {
