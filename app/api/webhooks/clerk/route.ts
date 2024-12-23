@@ -51,17 +51,17 @@ export async function POST(req: Request) {
     const { email_addresses, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      clerkId: id ?? 'default-id', // Забезпечуємо значення за замовчуванням, якщо id не є визначеним
+      clerkId: id ?? 'default-id',
       email: email_addresses[0].email_address,
-      username: username ?? 'default-username',  // Перевірка на null або undefined для username
-      firstName: first_name ?? 'Name',  // Перевірка на null або undefined для first_name
-      lastName: last_name ?? 'lastName',  // Перевірка на null або undefined для last_name
-      photo: image_url ?? '',  // Забезпечуємо значення за замовчуванням для photo
+      username: username ?? 'default-username',
+      firstName: first_name ?? 'Name',
+      lastName: last_name ?? 'lastName',
+      photo: image_url ?? '',
     };
 
     const newUser = await createUser(user);
 
-    if (newUser && id) { // Перевірка на існування id перед викликом updateUserMetadata
+    if (newUser && id) {
       const client = await clerkClient();
       await client.users.updateUserMetadata(id, {
         publicMetadata: {
@@ -83,12 +83,20 @@ export async function POST(req: Request) {
       photo: image_url ?? '',
     };
 
+    // Перевірка на наявність id перед викликом updateUser
+    if (!id) {
+      return new Response('Error: User ID is missing', { status: 400 });
+    }
+
     const updatedUser = await updateUser(id, user);
 
     return NextResponse.json({ message: 'OK', user: updatedUser });
   }
 
   if (eventType === 'user.deleted') {
+    if (!id) {
+      return new Response('Error: User ID is missing', { status: 400 });
+    }
     const deletedUser = await deleteUser(id);
 
     return NextResponse.json({ message: 'OK', user: deletedUser });
