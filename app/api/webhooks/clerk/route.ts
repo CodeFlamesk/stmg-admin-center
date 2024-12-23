@@ -12,19 +12,23 @@ export async function POST(req: Request) {
     throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local');
   }
 
+  // Отримання заголовків з використанням await
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response('Error occurred -- no svix headers', { status: 400 });
+    return new Response('Error occured -- no svix headers', {
+      status: 400,
+    });
   }
 
   const payload = await req.json();
   const body = JSON.stringify(payload);
 
   const wh = new Webhook(WEBHOOK_SECRET);
+
   let evt: WebhookEvent;
 
   try {
@@ -35,7 +39,9 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error('Error verifying webhook:', err);
-    return new Response('Error occurred', { status: 400 });
+    return new Response('Error occured', {
+      status: 400,
+    });
   }
 
   const { id } = evt.data;
@@ -57,7 +63,9 @@ export async function POST(req: Request) {
 
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
-        publicMetadata: { userId: newUser._id },
+        publicMetadata: {
+          userId: newUser._id,
+        },
       });
     }
 
@@ -80,7 +88,7 @@ export async function POST(req: Request) {
   }
 
   if (eventType === 'user.deleted') {
-    const deletedUser = await deleteUser(id);
+    const deletedUser = await deleteUser(id!);
 
     return NextResponse.json({ message: 'OK', user: deletedUser });
   }
