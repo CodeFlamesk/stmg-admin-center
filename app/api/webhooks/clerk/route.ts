@@ -51,19 +51,19 @@ export async function POST(req: Request) {
     const { email_addresses, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      clerkId: id ?? 'default-id',
+      clerkId: id ?? 'default-id', // Забезпечуємо значення за замовчуванням, якщо id не є визначеним
       email: email_addresses[0].email_address,
-      username: username!,
-      firstName: first_name ? first_name : 'Name',  
-      lastName: last_name ? last_name : 'lastName',    
-      photo: image_url,
-    
+      username: username ?? 'default-username',  // Перевірка на null або undefined для username
+      firstName: first_name ?? 'Name',  // Перевірка на null або undefined для first_name
+      lastName: last_name ?? 'lastName',  // Перевірка на null або undefined для last_name
+      photo: image_url ?? '',  // Забезпечуємо значення за замовчуванням для photo
     };
 
     const newUser = await createUser(user);
 
     if (newUser) {
-      await clerkClient.users.updateUserMetadata(id, {
+      const client = await clerkClient();
+      await client.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id,
         },
@@ -77,13 +77,13 @@ export async function POST(req: Request) {
     const { image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      firstName: first_name,
-      lastName: last_name,
-      username: username!,
-      photo: image_url,
+      firstName: first_name ?? 'Name',
+      lastName: last_name ?? 'LastName',
+      username: username ?? 'default-username',
+      photo: image_url ?? '',
     };
 
-    const updatedUser = await updateUser(id, user);
+    const updatedUser = await updateUser(id!, user);
 
     return NextResponse.json({ message: 'OK', user: updatedUser });
   }
