@@ -13,10 +13,10 @@ export async function POST(req: Request) {
   }
 
   // Отримання заголовків
-  const headerPayload = await headers(); // Використовується await, оскільки headers() повертає Promise
-  const svix_id = (await headerPayload).get("svix-id");
-  const svix_timestamp = (await headerPayload).get("svix-timestamp");
-  const svix_signature = (await headerPayload).get("svix-signature");
+  const headerPayload = await headers(); // Використовуємо await для отримання заголовків
+  const svix_id = headerPayload.get("svix-id");
+  const svix_timestamp = headerPayload.get("svix-timestamp");
+  const svix_signature = headerPayload.get("svix-signature");
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return new Response('Error occured -- no svix headers', {
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     const { email_addresses, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      clerkId: id,
+      clerkId: id,  // Тепер clerkId гарантовано не undefined
       email: email_addresses[0].email_address,
       username: username!,
       firstName: first_name,
