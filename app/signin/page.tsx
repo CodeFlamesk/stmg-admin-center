@@ -7,7 +7,7 @@ export default async function Signin() {
         <Container styles="flex justify-between  xl:flex-row  flex-col ">
             <div className="pt-52 flex flex-col items-center justify-center  w-full">
                 <p className="text-3xl font-bold text-center">
-                    Sign in to your account
+                    Sign in to your accountв
                 </p>
              {/*    <form  className="flex max-w-[358px] w-full flex-col pt-[70px]">
                     <label htmlFor="Email" className="auth-text">Email</label>
