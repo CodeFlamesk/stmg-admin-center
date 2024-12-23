@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main >
     <div> 
-     <p>help depoy this;;;;</p>
-         </div>
+     
+    </div>
     </main>
   )
 }
