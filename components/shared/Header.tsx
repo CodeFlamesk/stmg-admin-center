@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Container from "../Container";
-import { SignedIn, SignedOut, SignInButton, SignUp, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedOut, } from "@clerk/nextjs";
 import Link from "next/link";
 const Header: React.FC = () => {
     return (
@@ -16,12 +16,7 @@ const Header: React.FC = () => {
                 </nav>
                 <div>
 
-                    {/*   <Link href="/sign-in" className=" font-medium text-dark items-center flex" >
-                        <div className="flex gap-x-4">
-                            <p className="hover:text-purple duration-300 transition-all ease-in-out">Login</p>
-                        </div>
-                    </Link> */}
-
+                  
                     <SignedOut>
                      <button>
                         <Link href="/sign-in">

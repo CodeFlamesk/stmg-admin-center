@@ -1,6 +1,10 @@
+import Link from "next/link"
+
 const Footer = () => {
   return (
-    <div>Footer </div>
+    <div><Link href="/sign-in">
+    Loginkk
+    </Link></div>
   )
 }
 
