@@ -84,7 +84,6 @@ export async function POST(req: Request) {
       photo: image_url ?? '',
     };
 
-    // Перевірка на наявність id перед викликом updateUser
     if (!id) {
       return new Response('Error: User ID is missing', { status: 400 });
     }
