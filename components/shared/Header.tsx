@@ -29,10 +29,7 @@ const Header: React.FC = () => {
                         </Link>
                      </button>
                     </SignedOut>
-                    <SignedIn>
-                        <UserButton />
-                    </SignedIn>
-
+                    
                 </div>
 
             </Container>
