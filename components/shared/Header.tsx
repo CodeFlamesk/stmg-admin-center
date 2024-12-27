@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Container from "../Container";
-import { SignedOut, } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, } from "@clerk/nextjs";
 import Link from "next/link";
 const Header: React.FC = () => {
     return (
@@ -17,14 +17,17 @@ const Header: React.FC = () => {
                 <div>
 
                   
-                    <SignedOut>
-                     <button>
-                        <Link href="/sign-in">
-                        Login
-                        </Link>
-                     </button>
-                    </SignedOut>
-                    
+                <SignedIn>
+            <UserButton  />
+          
+          </SignedIn>
+          <SignedOut>
+            <button >
+              <Link href="/sign-in">
+                Login
+              </Link>
+            </button>
+          </SignedOut>
                 </div>
 
             </Container>
