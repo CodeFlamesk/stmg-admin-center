@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       const user = {
         clerkId: id,
         email: email_addresses[0]?.email_address ?? '', // Якщо email може бути відсутнім
-        username: username ?? '', // Якщо username може бути null
+        username: username!, // Якщо username може бути null
         firstName: first_name ?? '',
         lastName: last_name ?? '',
         photo: image_url,
@@ -68,8 +68,9 @@ export async function POST(req: Request) {
       const newUser = await createUser(user);
 
       if (newUser) {
-        console.log('Updating user metadata...');
-        await clerkClient.users.updateUserMetadata(id, {
+        const client = await clerkClient(); // Викликаємо функцію
+        console.log('client structure:', client); // Додайте для перевірки
+        await client.users.updateUserMetadata(id, {
           publicMetadata: {
             userId: newUser._id,
           },
@@ -95,7 +96,7 @@ export async function POST(req: Request) {
     case 'user.deleted': {
       const { id } = evt.data;
 
-      const deletedUser = await deleteUser(id);
+      const deletedUser = await deleteUser(id!);
 
       return NextResponse.json({ message: 'OK', user: deletedUser });
     }
