@@ -2,13 +2,13 @@
 
 import { revalidatePath } from 'next/cache'
 
+import { CreateUserParams, UpdateUserParams } from '@/types'
 
 import User from '@/lib/database/models/user.model'
 import Order from '@/lib/database/models/oder.model' // Якщо файл досі називається `oder.model`
 import Event from '@/lib/database/models/event.model'
 import { handleError } from '@/lib/utils'
 
-import { CreateUserParams, UpdateUserParams } from '@/types'
 import { connectToDatabase } from '../database'
 
 export async function createUser(user: CreateUserParams) {
