@@ -8,23 +8,40 @@ export async function syncAllUsersFromClerk() {
     // Отримання списку користувачів
     const clerkUsers: User[] = await users.getUserList();
 
-    await Promise.all(
-      clerkUsers.map(async (clerkUser: User) => {
-        const user = {
-          clerkId: clerkUser.id,
-          email: clerkUser.emailAddresses[0]?.emailAddress || '',
-          username: clerkUser.username || 'default-username',
-          firstName: clerkUser.firstName || 'Name',
-          lastName: clerkUser.lastName || 'LastName',
-          photo: clerkUser.profileImageUrl || '',
-        };
-        await createUser(user);
-      })
-    );
+    if (clerkUsers.length === 0) {
+      console.log('Немає користувачів для синхронізації.');
+      return;
+    }
+
+    // Поділ користувачів на батчі (наприклад, по 10 користувачів)
+    const batchSize = 10;
+    for (let i = 0; i < clerkUsers.length; i += batchSize) {
+      const batch = clerkUsers.slice(i, i + batchSize);
+
+      await Promise.all(
+        batch.map(async (clerkUser: User) => {
+          try {
+            const user = {
+              clerkId: clerkUser.id,
+              email: clerkUser.emailAddresses?.[0]?.emailAddress || 'no-email',
+              username: clerkUser.username || `user-${clerkUser.id}`, // Генерація унікального username
+              firstName: clerkUser.firstName || 'FirstName',
+              lastName: clerkUser.lastName || 'LastName',
+              photo: clerkUser.profileImageUrl || '',
+            };
+
+            console.log('Синхронізація користувача:', user);
+            await createUser(user);
+          } catch (error) {
+            console.error(`Помилка при синхронізації користувача ${clerkUser.id}:`, error);
+          }
+        })
+      );
+    }
 
     console.log('Синхронізація завершена');
-  } catch (error) {
-    console.error('Помилка синхронізації:', error);
+  } catch (error: any) {
+    console.error('Помилка синхронізації:', error.message || error);
   }
 }
 
